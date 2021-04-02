@@ -38,11 +38,11 @@ export function CheckOut() {
     inputRef.current.focus();
   }, []);
   const { items, setItem, setInitialItems } = useCart();
-  let splitByInterval = (str, n) =>
-    str.match(new RegExp(".{1," + n + "}", "g")).join(" ");
-  const handleCreditValueChange = ({ target }) => {
-    setCreditInput(splitByInterval(target.value, 4));
-  };
+  // let splitByInterval = (str, n) =>
+  //   str.match(new RegExp(".{1," + n + "}", "g")).join(" ");
+  // const handleCreditValueChange = ({ target }) => {
+  //   setCreditInput(splitByInterval(target.value, 4));
+  // };
   return (
     <div>
       <br />
@@ -51,7 +51,7 @@ export function CheckOut() {
         ref={inputRef}
         type="text"
         value={creditInput}
-        onChange={handleCreditValueChange}
+        onChange={(e) => setCreditInput(e.target.value)}
       />
       <button
         onClick={() => {
