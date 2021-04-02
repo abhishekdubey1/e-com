@@ -1,6 +1,7 @@
 import "./styles.css";
 import { useState, useRef, useEffect } from "react";
 import { useCart } from "./cart-context";
+import Wishlist from "./Wishlist";
 
 function ShowItem({ item, removeItem }) {
   const { id, name, price, count } = item;
@@ -37,7 +38,7 @@ export function CheckOut() {
   useEffect(() => {
     inputRef.current.focus();
   }, []);
-  const { items, setItem, setInitialItems } = useCart();
+  const { items, setItems, setInitialItems } = useCart();
   // let splitByInterval = (str, n) =>
   //   str.match(new RegExp(".{1," + n + "}", "g")).join(" ");
   // const handleCreditValueChange = ({ target }) => {
@@ -74,7 +75,7 @@ export function CheckOut() {
 }
 // Route
 export function ProductListing() {
-  const { items, setItem } = useCart();
+  const { items, setItems } = useCart();
   return items.map((item) => (
     <div
       style={{ border: "solid black 1px", padding: "1rem", margin: "1rem" }}
@@ -89,7 +90,7 @@ export function ProductListing() {
               el.id === item.id ? { ...el, count: el.count + 1 } : el
             );
             console.log(temp);
-            setItem(temp);
+            setItems(temp);
           }}
         >
           Add to Cart
@@ -101,7 +102,7 @@ export function ProductListing() {
               let temp = items.map((el) =>
                 el.id === item.id ? { ...el, count: el.count + 1 } : el
               );
-              setItem(temp);
+              setItems(temp);
             }}
           >
             +
@@ -111,7 +112,7 @@ export function ProductListing() {
               let temp = items.map((el) =>
                 el.id === item.id ? { ...el, count: el.count - 1 } : el
               );
-              setItem(temp);
+              setItems(temp);
             }}
           >
             -
@@ -123,18 +124,18 @@ export function ProductListing() {
 }
 // Route
 export function Cart() {
-  // const { items, setItem } = useContext(CartContext);
-  const { items, setItem } = useCart();
+  // const { items, setItems } = useContext(CartContext);
+  const { items, setItems } = useCart();
   const removeItem = (id) => {
     let temp = items.map((el) => (el.id === id ? { ...el, count: 0 } : el));
-    setItem(temp);
+    setItems(temp);
   };
-  var count = items.reduce(function (n, val) {
+  let length = items.reduce(function (n, val) {
     return n + (val.count > 0);
   }, 0);
   return (
     <div>
-      <h1> Items in cart {count} </h1>
+      <h1> Items in cart {length} </h1>
       <ul>
         {items.map((item) => {
           if (item.count) {
@@ -157,10 +158,12 @@ export default function App() {
       <button onClick={() => setRoute("products")}>Product</button>
       <button onClick={() => setRoute("cart")}>Cart</button>
       <button onClick={() => setRoute("checkout")}>Checkout</button>
+      <button onClick={() => setRoute("wishlist")}>Wishlist</button>
       <div className="app-body">
         {route === "checkout" && <CheckOut />}
         {route === "cart" && <Cart />}
         {route === "products" && <ProductListing />}
+        {route === "wishlist" && <Wishlist setRoute={setRoute} />}
       </div>
     </div>
   );

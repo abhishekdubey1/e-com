@@ -12,7 +12,14 @@
   width: 350px;
   user-select: none;
 }
+.wishlist-products {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
 .wishlist-product {
+  margin: 15px 10px;
 }
 .wishlist-product-details {
   display: flex;
